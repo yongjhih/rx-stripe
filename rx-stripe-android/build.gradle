@@ -1,0 +1,46 @@
+apply plugin: 'com.android.library'
+apply plugin: 'checkstyle'
+// make sure this line comes *after* you apply the Android plugin
+apply plugin: 'com.getkeepsafe.dexcount'
+
+assemble.dependsOn('lint')
+check.dependsOn('checkstyle')
+
+configurations {
+    javadocDeps
+}
+
+dependencies {
+    api 'com.stripe:stripe-android:6.1.1'
+    api 'io.reactivex.rxjava2:rxjava:2.1.9'
+    implementation "com.android.support:support-annotations:${supportLibVersion}"
+    implementation "com.android.support:appcompat-v7:${supportLibVersion}"
+    // Api for this import because we use reflection to alter TextInputLayout
+    api "com.android.support:design:${supportLibVersion}"
+
+    javadocDeps "com.android.support:support-annotations:${supportLibVersion}"
+    javadocDeps "com.android.support:appcompat-v7:${supportLibVersion}"
+    javadocDeps "com.android.support:design:${supportLibVersion}"
+    compileOnly "javax.annotation:jsr250-api:${javaAnnotationVersion}"
+
+    testImplementation "junit:junit:${junitVersion}"
+    testImplementation "org.mockito:mockito-core:${mockitoCoreVersion}"
+    testImplementation "org.robolectric:robolectric:${robolectricVersion}"
+
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+}
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "26.0.2"
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion compileSdkVersion
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+}
+
+apply plugin: 'com.github.dcendents.android-maven'
+apply from: 'android-javadoc.gradle'

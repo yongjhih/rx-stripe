@@ -1,0 +1,39 @@
+apply plugin: 'com.android.library'
+apply plugin: 'checkstyle'
+// make sure this line comes *after* you apply the Android plugin
+//apply plugin: 'com.getkeepsafe.dexcount'
+apply plugin: 'kotlin-android'
+
+assemble.dependsOn('lint')
+check.dependsOn('checkstyle')
+
+configurations {
+    javadocDeps
+}
+
+dependencies {
+    implementation project(':rx-stripe-android')
+    api 'io.reactivex.rxjava2:rxjava:2.1.9'
+    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    testImplementation "junit:junit:${junitVersion}"
+    testImplementation "org.mockito:mockito-core:${mockitoCoreVersion}"
+    testImplementation "org.robolectric:robolectric:${robolectricVersion}"
+
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+}
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "26.0.2"
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion compileSdkVersion
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+}
+
+apply plugin: 'com.github.dcendents.android-maven'
+apply from: 'android-javadoc.gradle'

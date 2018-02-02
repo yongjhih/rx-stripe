@@ -1,0 +1,3 @@
+include ':rx-stripe-java'
+include ':rx-stripe-android'
+include ':rx-stripe-android-kotlin'
