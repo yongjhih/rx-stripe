@@ -27,7 +27,7 @@ Observable<Token> tokenObservable = RxStripe.createToken(stripe, cardToCharge);
 After (rx-stripe-android-kotlin):
 
 ```kotlin
-val tokenObservabl: Observable<Token> = stripe.createToken(cardToCharge);
+val tokenObservable: Observable<Token> = stripe.createToken(cardToCharge);
 ```
 
 ## Installation
@@ -35,6 +35,8 @@ val tokenObservabl: Observable<Token> = stripe.createToken(cardToCharge);
 ```gradle
 compile 'com.github.yongjhih.rx-stripe:rx-stripe-android:-SNAPSHOT'
 ```
+
+or
 
 ```gradle
 compile 'com.github.yongjhih.rx-stripe:rx-stripe-android-kotlin:-SNAPSHOT'
