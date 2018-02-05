@@ -25,28 +25,29 @@ import io.reactivex.Single
 
 object RxStripeExt {
     inline fun Stripe.createToken(card: Card): Single<Token> =
-            RxStripe.createToken(this, card)
+            Single.fromCallable { createTokenSynchronous(card) }
 
-    inline fun Stripe.createToken(card: Card, publishableKey: String): Single<Token> =
-            RxStripe.createToken(this, card, publishableKey)
+    inline fun Stripe.createToken(card: Card,
+                                  publishableKey: String): Single<Token> =
+        Single.fromCallable { createTokenSynchronous(card, publishableKey) }
 
     inline fun Stripe.createAccountToken(accountParams: AccountParams): Single<Token> =
-            RxStripe.createAccountToken(this, accountParams)
+        Single.fromCallable { createAccountTokenSynchronous(accountParams) }
 
     inline fun Stripe.createBankAccountToken(bankAccount: BankAccount): Single<Token> =
-            RxStripe.createBankAccountToken(this, bankAccount)
+        Single.fromCallable { createBankAccountTokenSynchronous(bankAccount) }
 
     inline fun Stripe.createPiiToken(personalId: String): Single<Token> =
-            RxStripe.createPiiToken(this, personalId)
+        Single.fromCallable { createPiiTokenSynchronous(personalId) }
 
     inline fun Stripe.createSource(params: SourceParams): Single<Source> =
-            RxStripe.createSource(this, params)
+        Single.fromCallable { createSourceSynchronous(params) }
 
     inline fun Stripe.retrieveSource(@Size(min = 1) sourceId: String,
                                      @Size(min = 1) clientSecret: String): Maybe<Source> =
-            RxStripe.retrieveSource(this, sourceId, clientSecret)
+        Maybe.fromCallable { retrieveSourceSynchronous(sourceId, clientSecret) }
 
     inline fun Stripe.logEvent(productUsageTokens: List<String>,
                                paymentSource: StripePaymentSource): Completable =
-            RxStripe.logEvent(this, productUsageTokens, paymentSource)
+            Completable.fromAction { logEventSynchronous(productUsageTokens, paymentSource) }
 }
